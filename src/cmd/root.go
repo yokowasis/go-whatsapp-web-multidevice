@@ -166,6 +166,9 @@ func initEnvConfig() {
 	if envChatwootDeviceID := viper.GetString("chatwoot_device_id"); envChatwootDeviceID != "" {
 		config.ChatwootDeviceID = envChatwootDeviceID
 	}
+	if viper.IsSet("chatwoot_skip_unsupported_messages") {
+		config.ChatwootSkipUnsupportedMessages = viper.GetBool("chatwoot_skip_unsupported_messages")
+	}
 	// Chatwoot History Sync settings
 	if viper.IsSet("chatwoot_import_messages") {
 		config.ChatwootImportMessages = viper.GetBool("chatwoot_import_messages")
