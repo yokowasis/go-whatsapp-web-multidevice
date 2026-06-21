@@ -958,7 +958,7 @@ func syncPayloadToChatwoot(ctx context.Context, payload map[string]any, eventNam
 	}
 	if content == "" && len(attachments) == 0 {
 		logrus.Info("Chatwoot: Skipping sync because message content and attachments are empty")
-		return
+		return nil
 	}
 	info.IsFromMe = chatwootMessageTypeFromPayload(data) == "outgoing"
 
