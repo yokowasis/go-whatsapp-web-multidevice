@@ -403,6 +403,10 @@ func buildChatwootMessageContent(data map[string]any, isGroup bool, fromName str
 
 	// Handle empty content
 	if content == "" && len(attachments) == 0 {
+		if config.ChatwootSkipUnsupportedMessages {
+			logrus.Info("Chatwoot: Message content is empty/unsupported, skipping due to configuration")
+			return "", attachments
+		}
 		content = "(Unsupported message type)"
 		logrus.Info("Chatwoot: Message content is empty/unsupported, using placeholder")
 	}
@@ -951,6 +955,10 @@ func syncPayloadToChatwoot(ctx context.Context, payload map[string]any, eventNam
 		if rid, _ := data["replied_to_id"].(string); rid != "" {
 			msgOpts.ContentAttributes = map[string]any{"in_reply_to_external_id": "WAID:" + rid}
 		}
+	}
+	if content == "" && len(attachments) == 0 {
+		logrus.Info("Chatwoot: Skipping sync because message content and attachments are empty")
+		return
 	}
 	info.IsFromMe = chatwootMessageTypeFromPayload(data) == "outgoing"
 
