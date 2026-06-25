@@ -291,7 +291,13 @@ func (h *ChatwootHandler) HandleWebhook(c *fiber.Ctx) error {
 
 	destination := route.Destination
 	if destination == "" {
-		logrus.Warnf("Chatwoot Webhook: No destination phone for contact ID %d", contact.ID)
+		logrus.WithFields(logrus.Fields{
+			"contact_id":      contact.ID,
+			"contact_phone":   contact.PhoneNumber,
+			"conversation_id": payload.Conversation.ID,
+			"device_id":       route.DeviceID,
+			"message_content": payload.Content,
+		}).Warn("Chatwoot Webhook: No destination phone for contact")
 		return c.SendStatus(fiber.StatusOK)
 	}
 
