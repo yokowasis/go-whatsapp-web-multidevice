@@ -62,6 +62,8 @@ var (
 	ChatwootDeviceID  = "" // Device ID for outbound messages (required for multi-device)
 	// Ignore unsupported/empty messages instead of sending placeholder text to Chatwoot.
 	ChatwootSkipUnsupportedMessages = false
+	// Ignore reacted messages to be sent to chatwoot.
+	ChatwootIgnoreReactionMessages = false
 
 	// Chatwoot History Sync settings
 	ChatwootImportMessages          = false // Enable message history import to Chatwoot

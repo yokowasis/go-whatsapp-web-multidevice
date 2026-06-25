@@ -182,6 +182,9 @@ func initEnvConfig() {
 	if viper.IsSet("chatwoot_skip_unsupported_messages") {
 		config.ChatwootSkipUnsupportedMessages = viper.GetBool("chatwoot_skip_unsupported_messages")
 	}
+	if viper.IsSet("chatwoot_ignore_reaction_messages") {
+		config.ChatwootIgnoreReactionMessages = viper.GetBool("chatwoot_ignore_reaction_messages")
+	}
 	// Chatwoot History Sync settings
 	if viper.IsSet("chatwoot_import_messages") {
 		config.ChatwootImportMessages = viper.GetBool("chatwoot_import_messages")
@@ -475,6 +478,12 @@ func initFlags() {
 		"chatwoot-ignore-jids", "",
 		config.ChatwootIgnoreJids,
 		`comma-separated WhatsApp JIDs (or "@g.us"/"@s.whatsapp.net" wildcards) to never mirror to Chatwoot --chatwoot-ignore-jids <list> | example: --chatwoot-ignore-jids="@g.us,123@s.whatsapp.net"`,
+	)
+	rootCmd.PersistentFlags().BoolVarP(
+		&config.ChatwootIgnoreReactionMessages,
+		"chatwoot-ignore-reaction-messages", "",
+		config.ChatwootIgnoreReactionMessages,
+		`ignore reacted message to be sent to chatwoot --chatwoot-ignore-reaction-messages <true/false> | example: --chatwoot-ignore-reaction-messages=true`,
 	)
 	rootCmd.PersistentFlags().BoolVarP(
 		&config.ChatwootSignMsg,

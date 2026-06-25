@@ -421,8 +421,10 @@ func buildChatwootMessageContent(data map[string]any, isGroup bool, fromName str
 
 func shouldForwardEventToChatwoot(eventName string) bool {
 	switch eventName {
-	case "message", "message.reaction":
+	case "message":
 		return true
+	case "message.reaction":
+		return !config.ChatwootIgnoreReactionMessages
 	case "message.ack":
 		return config.ChatwootMessageRead
 	case "message.edited":
